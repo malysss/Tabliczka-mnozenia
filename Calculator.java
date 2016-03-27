@@ -1,19 +1,15 @@
 package tabliczkamnozenia;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.math.BigDecimal;
 
 import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 
 public class Calculator extends JFrame{
 	
@@ -26,12 +22,16 @@ public class Calculator extends JFrame{
 	private JButton c;
 	private JPanel panel;
 	private Listener listener;
-	private double wynik;
-	private double wynikKoncowy;
+//	private double wynik;
+//	private double wynikKoncowy;
+	private BigDecimal wynik;
+	private BigDecimal wynikKoncowy;
 	
 	public Calculator(){
-		wynik = 0;
-		wynikKoncowy = 0;
+//		wynik = 0;
+//		wynikKoncowy = 0;
+		wynik = BigDecimal.valueOf(0);
+		wynikKoncowy = BigDecimal.valueOf(0);
 		startup = true;
 		pierwszyMinus = false;
 		dot = false;
@@ -74,28 +74,6 @@ public class Calculator extends JFrame{
 		c.setForeground(Color.WHITE);
 		c.addActionListener(new Listener());
 		
-		
-		/*
-		InputMap imap = panel.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-		for (int i=0; i<10; i++){
-			String str = "" + i;
-			imap.put(KeyStroke.getKeyStroke(str), "panel.imap");
-		}
-		String[] znakiTab = {"+", "-", "*", "/", ".", "C", "=", "h"};
-		for (String znaki : znakiTab){
-			imap.put(KeyStroke.getKeyStroke(znaki), "panel.imap");
-		}
-		imap.put(KeyStroke.getKeyStroke("VK_NUMPAD0"), "panel.imap");
-		imap.put(KeyStroke.getKeyStroke("VK_MINUS"), "panel.imap");
-//		imap.put(KeyStroke.getKeyStroke("*"), "panel.imap");
-		
-		//Powi¹zanie nazw z akcjami
-		ActionMap amap = panel.getActionMap();
-		amap.put("panel.imap", listener);
-//		amap.put("panel.imap2d", listener);
-		*/
-		
-		
 		add(wyswietlacz, layout.NORTH);
 		add(panel, layout.CENTER);
 		add(c, layout.SOUTH);
@@ -120,8 +98,9 @@ public class Calculator extends JFrame{
 			
 			switch (przyciskString) {
 			case "+":{
-				if (!startup) {					
-					wynik = Double.parseDouble(wyswietlacz.getText());
+				if (!startup) {
+//					wynik = Double.parseDouble(wyswietlacz.getText());
+					wynik = BigDecimal.valueOf(Double.parseDouble(wyswietlacz.getText()));
 					oblicz();
 					znak = "+";
 				}
@@ -129,10 +108,16 @@ public class Calculator extends JFrame{
 				break;
 			}
 			case "-":{
-				if (startup && wynik == 0 && wynikKoncowy == 0) pierwszyMinus = true;
+//				if (startup && wynik == 0 && wynikKoncowy == 0) pierwszyMinus = true;
+				if (startup && wynik.compareTo(BigDecimal.valueOf(0)) == 0 && wynikKoncowy.compareTo(BigDecimal.valueOf(0)) == 0){
+					pierwszyMinus = true;
+//					wyswietlacz.setText("-");
+//					znak = "-";
+				}
 				else if (startup) znak = "-";
 				else {
-					wynik = Double.parseDouble(wyswietlacz.getText());
+//					wynik = Double.parseDouble(wyswietlacz.getText());
+					wynik = BigDecimal.valueOf(Double.parseDouble(wyswietlacz.getText()));
 					oblicz();
 					znak = "-";
 //					System.out.println("wewn¹trz minusa wynik = "+ wynik + " wynikKoncowy = " + wynikKoncowy);
@@ -142,7 +127,8 @@ public class Calculator extends JFrame{
 			case "/":{
 				if (!startup) {
 //					System.out.println("wewn¹trz dzielenia");
-					wynik = Double.parseDouble(wyswietlacz.getText());
+//					wynik = Double.parseDouble(wyswietlacz.getText());
+					wynik = BigDecimal.valueOf(Double.parseDouble(wyswietlacz.getText()));
 					oblicz();
 					znak = "/";
 				}
@@ -152,7 +138,8 @@ public class Calculator extends JFrame{
 			case "*": {
 				if (!startup) {
 //					System.out.println("wewn¹trz mno¿enia");
-					wynik = Double.parseDouble(wyswietlacz.getText());
+//					wynik = Double.parseDouble(wyswietlacz.getText());
+					wynik = BigDecimal.valueOf(Double.parseDouble(wyswietlacz.getText()));
 					oblicz();
 					znak = "*";
 				}
@@ -174,14 +161,17 @@ public class Calculator extends JFrame{
 				break;
 			case "=": 
 				if (!startup){
-					wynik = Double.parseDouble(wyswietlacz.getText());
+//					wynik = Double.parseDouble(wyswietlacz.getText());
+					wynik = BigDecimal.valueOf(Double.parseDouble(wyswietlacz.getText()));
 					oblicz();
 					znak = null;
 				}
 				break;
 			case "C": {
-				wynik = 0;
-				wynikKoncowy = 0;
+//				wynik = 0;
+//				wynikKoncowy = 0;
+				wynik = BigDecimal.valueOf(0);
+				wynikKoncowy = BigDecimal.valueOf(0);
 				startup = true;
 				pierwszyMinus = false;
 				dot = false;
@@ -193,6 +183,7 @@ public class Calculator extends JFrame{
 				if (startup){
 					if (pierwszyMinus) {
 						wyswietlacz.setText("-"+przyciskString);
+						
 						startup = false;
 					}
 					else {
@@ -216,32 +207,39 @@ public class Calculator extends JFrame{
 				wynikKoncowy = wynik;
 				startup = true;
 			}
-			else if (znak == "/" && wynik == 0){
+//			else if (znak == "/" && wynik == 0){
+			else if (znak == "/" && wynik.compareTo(BigDecimal.valueOf(0)) == 0){
 				wyswietlacz.setText("Dzielenie przez 0");
-				wynik = 0;
-				wynikKoncowy = 0;
+//				wynik = 0;
+//				wynikKoncowy = 0;
+				wynik = BigDecimal.valueOf(0);
+				wynikKoncowy = BigDecimal.valueOf(0);
 				znak = null;
 				startup = true;
 			}
 			else {
 				switch (znak) {
 				case "+": {
-					wynikKoncowy = wynikKoncowy + wynik;
+//					wynikKoncowy = wynikKoncowy + wynik;
+					wynikKoncowy = wynikKoncowy.add(wynik);
 					wyswietlacz.setText("" + wynikKoncowy);
 					break;
 				}
 				case "-": {
-					wynikKoncowy = wynikKoncowy - wynik;
+//					wynikKoncowy = wynikKoncowy - wynik;
+					wynikKoncowy = wynikKoncowy.subtract(wynik);
 					wyswietlacz.setText("" + wynikKoncowy);
 					break;
 				}
 				case "*": {
-					wynikKoncowy *= wynik;
+//					wynikKoncowy *= wynik;
+					wynikKoncowy = wynikKoncowy.multiply(wynik);
 					wyswietlacz.setText("" + wynikKoncowy);
 					break;
 				}
 				case "/": {
-					wynikKoncowy /= wynik;
+//					wynikKoncowy /= wynik;
+					wynikKoncowy = wynikKoncowy.divide(wynik);
 					wyswietlacz.setText("" + wynikKoncowy);
 					break;
 				}
@@ -249,6 +247,7 @@ public class Calculator extends JFrame{
 				startup = true;
 			}
 			dot = false;
+			pierwszyMinus = false;
 		}
 		
 	}
