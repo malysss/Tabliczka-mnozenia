@@ -22,14 +22,10 @@ public class Calculator extends JFrame{
 	private JButton c;
 	private JPanel panel;
 	private Listener listener;
-//	private double wynik;
-//	private double wynikKoncowy;
 	private BigDecimal wynik;
 	private BigDecimal wynikKoncowy;
 	
 	public Calculator(){
-//		wynik = 0;
-//		wynikKoncowy = 0;
 		wynik = BigDecimal.valueOf(0);
 		wynikKoncowy = BigDecimal.valueOf(0);
 		startup = true;
@@ -94,12 +90,10 @@ public class Calculator extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String przyciskString = e.getActionCommand();
-//			System.out.println(przyciskString);
 			
 			switch (przyciskString) {
 			case "+":{
 				if (!startup) {
-//					wynik = Double.parseDouble(wyswietlacz.getText());
 					wynik = BigDecimal.valueOf(Double.parseDouble(wyswietlacz.getText()));
 					oblicz();
 					znak = "+";
@@ -108,26 +102,19 @@ public class Calculator extends JFrame{
 				break;
 			}
 			case "-":{
-//				if (startup && wynik == 0 && wynikKoncowy == 0) pierwszyMinus = true;
 				if (startup && wynik.compareTo(BigDecimal.valueOf(0)) == 0 && wynikKoncowy.compareTo(BigDecimal.valueOf(0)) == 0){
 					pierwszyMinus = true;
-//					wyswietlacz.setText("-");
-//					znak = "-";
 				}
 				else if (startup) znak = "-";
 				else {
-//					wynik = Double.parseDouble(wyswietlacz.getText());
 					wynik = BigDecimal.valueOf(Double.parseDouble(wyswietlacz.getText()));
 					oblicz();
 					znak = "-";
-//					System.out.println("wewn¹trz minusa wynik = "+ wynik + " wynikKoncowy = " + wynikKoncowy);
 				}
 				break;
 			}
 			case "/":{
 				if (!startup) {
-//					System.out.println("wewn¹trz dzielenia");
-//					wynik = Double.parseDouble(wyswietlacz.getText());
 					wynik = BigDecimal.valueOf(Double.parseDouble(wyswietlacz.getText()));
 					oblicz();
 					znak = "/";
@@ -137,8 +124,6 @@ public class Calculator extends JFrame{
 			}
 			case "*": {
 				if (!startup) {
-//					System.out.println("wewn¹trz mno¿enia");
-//					wynik = Double.parseDouble(wyswietlacz.getText());
 					wynik = BigDecimal.valueOf(Double.parseDouble(wyswietlacz.getText()));
 					oblicz();
 					znak = "*";
@@ -161,15 +146,12 @@ public class Calculator extends JFrame{
 				break;
 			case "=": 
 				if (!startup){
-//					wynik = Double.parseDouble(wyswietlacz.getText());
 					wynik = BigDecimal.valueOf(Double.parseDouble(wyswietlacz.getText()));
 					oblicz();
 					znak = null;
 				}
 				break;
 			case "C": {
-//				wynik = 0;
-//				wynikKoncowy = 0;
 				wynik = BigDecimal.valueOf(0);
 				wynikKoncowy = BigDecimal.valueOf(0);
 				startup = true;
@@ -207,11 +189,8 @@ public class Calculator extends JFrame{
 				wynikKoncowy = wynik;
 				startup = true;
 			}
-//			else if (znak == "/" && wynik == 0){
 			else if (znak == "/" && wynik.compareTo(BigDecimal.valueOf(0)) == 0){
 				wyswietlacz.setText("Dzielenie przez 0");
-//				wynik = 0;
-//				wynikKoncowy = 0;
 				wynik = BigDecimal.valueOf(0);
 				wynikKoncowy = BigDecimal.valueOf(0);
 				znak = null;
@@ -220,25 +199,21 @@ public class Calculator extends JFrame{
 			else {
 				switch (znak) {
 				case "+": {
-//					wynikKoncowy = wynikKoncowy + wynik;
 					wynikKoncowy = wynikKoncowy.add(wynik);
 					wyswietlacz.setText("" + wynikKoncowy);
 					break;
 				}
 				case "-": {
-//					wynikKoncowy = wynikKoncowy - wynik;
 					wynikKoncowy = wynikKoncowy.subtract(wynik);
 					wyswietlacz.setText("" + wynikKoncowy);
 					break;
 				}
 				case "*": {
-//					wynikKoncowy *= wynik;
 					wynikKoncowy = wynikKoncowy.multiply(wynik);
 					wyswietlacz.setText("" + wynikKoncowy);
 					break;
 				}
 				case "/": {
-//					wynikKoncowy /= wynik;
 					wynikKoncowy = wynikKoncowy.divide(wynik);
 					wyswietlacz.setText("" + wynikKoncowy);
 					break;
