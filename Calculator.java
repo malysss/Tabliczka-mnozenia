@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -214,7 +215,8 @@ public class Calculator extends JFrame{
 					break;
 				}
 				case "/": {
-					wynikKoncowy = wynikKoncowy.divide(wynik);
+//					wynikKoncowy = wynikKoncowy.divide(wynik);
+					wynikKoncowy = wynikKoncowy.divide(wynik, 8, RoundingMode.HALF_UP);
 					wyswietlacz.setText("" + wynikKoncowy);
 					break;
 				}
